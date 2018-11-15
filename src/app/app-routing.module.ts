@@ -1,17 +1,18 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
-import { LogInComponent } from './log-in/log-in.component';
+import { AuthGuard } from './auth/services/auth-guard.service';
 
-const routes: Routes = [
-  {
-    path: '',
-    pathMatch: 'full',
-    component: LogInComponent
-  }
+export const routes: Routes = [
+    { path: '', redirectTo: '/traces', pathMatch: 'full' },
+    {
+        path: 'traces',
+        canActivate: [AuthGuard],
+        loadChildren: 'src/app/trace-explorer/trace-explorer.module#TraceExplorerModule'
+    }
 ];
 
 @NgModule({
-  imports: [RouterModule.forRoot(routes)],
-  exports: [RouterModule]
+    imports: [RouterModule.forRoot(routes, { useHash: true })],
+    exports: [RouterModule]
 })
-export class AppRoutingModule { }
+export class AppRoutingModule {}

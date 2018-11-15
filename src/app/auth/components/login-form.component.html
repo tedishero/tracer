@@ -1,4 +1,4 @@
-<form (ngSubmit)="onSubmit()" #heroForm="ngForm">
+<form (ngSubmit)="onSubmit()" [formGroup]="form">
     <div class="svgContainer">
         <div>
             <svg
@@ -270,12 +270,12 @@
     <div>TODO: remove this: {{ model.appId }}</div>
     <div class="inputGroup inputGroup1">
         <label for="email1">App Id</label>
-        <input type="text" id="email" name="appId" class="email" maxlength="256" [(ngModel)]="model.appId" />
+        <input type="text" id="email" class="email" placeholder="App Id" formControlName="appId" maxlength="256" />
         <span class="indicator"></span>
     </div>
     <div class="inputGroup inputGroup2">
         <label for="password">Key</label>
-        <input type="password" id="password" name="key" class="password" [(ngModel)]="model.key" />
+        <input type="password" id="password" class="password" placeholder="App Key" formControlName="key" />
     </div>
     <div class="inputGroup inputGroup3"><button>Log in</button></div>
 </form>

@@ -1,13 +1,34 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter, ChangeDetectionStrategy } from '@angular/core';
+import { FormGroup, FormControl } from '@angular/forms';
+import { Credentials } from '../models/credentials';
 declare var TweenMax: any;
 declare var Quad: any;
 declare var Expo: any;
 @Component({
-    selector: 'app-log-in',
-    templateUrl: './log-in.component.html',
-    styleUrls: ['./log-in.component.scss']
+    selector: 'app-login-form',
+    templateUrl: './login-form.component.html',
+    styleUrls: ['./login-form.component.scss'],
+    changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class LogInComponent implements OnInit {
+export class LoginFormComponent implements OnInit {
+    @Input()
+    set pending(isPending: boolean) {
+        if (isPending) {
+            this.form.disable();
+        } else {
+            this.form.enable();
+        }
+    }
+
+    @Input() errorMessage: string | null;
+
+    @Output() submitted = new EventEmitter<Credentials>();
+
+    form: FormGroup = new FormGroup({
+        appId: new FormControl(''),
+        key: new FormControl('')
+    });
+
     email: any;
     password: any;
     mySVG: any;
@@ -204,7 +225,9 @@ export class LogInComponent implements OnInit {
     }
 
     onSubmit() {
-        alert('submitted');
+        if (this.form.valid) {
+            this.submitted.emit(this.form.value);
+        }
     }
 
     getCoord(e) {
