@@ -9,6 +9,7 @@ import { reducers } from './reducers';
 import { AuthRoutingModule } from './auth-routing.module';
 import { LoginPageComponent } from './container/login-page.component';
 import { LoginFormComponent } from './components/login-form.component';
+import { NgxLoadingModule } from 'ngx-loading';
 
 export const COMPONENTS = [LoginPageComponent, LoginFormComponent];
 
@@ -18,7 +19,8 @@ export const COMPONENTS = [LoginPageComponent, LoginFormComponent];
         ReactiveFormsModule,
         AuthRoutingModule,
         StoreModule.forFeature('auth', reducers),
-        EffectsModule.forFeature([AuthEffects])
+        EffectsModule.forFeature([AuthEffects]),
+        NgxLoadingModule
     ],
     declarations: COMPONENTS
 })

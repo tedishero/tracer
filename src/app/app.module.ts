@@ -9,6 +9,7 @@ import { StoreModule } from '@ngrx/store';
 import { reducers, metaReducers } from './reducers';
 import { StoreRouterConnectingModule } from '@ngrx/router-store';
 import { StoreDevtoolsModule } from '@ngrx/store-devtools';
+import { NgxLoadingModule } from 'ngx-loading';
 
 import { environment } from '../environments/environment';
 import { EffectsModule } from '@ngrx/effects';
@@ -58,7 +59,9 @@ import { AppComponent } from './core/containers/app.component';
          *
          * See: https://github.com/ngrx/platform/blob/master/docs/effects/api.md#forroot
          */
-        EffectsModule.forRoot([])
+        EffectsModule.forRoot([]),
+
+        NgxLoadingModule.forRoot({})
     ],
     providers: [],
     bootstrap: [AppComponent]

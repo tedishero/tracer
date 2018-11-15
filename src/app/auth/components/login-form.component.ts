@@ -11,6 +11,8 @@ declare var Expo: any;
     changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class LoginFormComponent implements OnInit {
+
+    
     @Input()
     set pending(isPending: boolean) {
         if (isPending) {

@@ -1,0 +1,14 @@
+<ng-template #customLoadingTemplate>
+    <!--
+        <app-login-form (submitted)="onSubmit($event)" [pending]="pending$ | async" [errorMessage]="error$ | async">
+
+
+        </app-login-form>
+    -->
+</ng-template>
+
+<div>
+    <app-login-form (submitted)="onSubmit($event)" [pending]="pending$ | async" [errorMessage]="error$ | async">
+    </app-login-form>
+    <ngx-loading [show]="pending$ | async"></ngx-loading>
+</div>
