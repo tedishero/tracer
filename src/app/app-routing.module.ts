@@ -6,7 +6,7 @@ export const routes: Routes = [
     { path: '', redirectTo: '/traces', pathMatch: 'full' },
     {
         path: 'traces',
-        canActivate: [AuthGuard],
+        // canActivate: [AuthGuard],
         loadChildren: 'src/app/trace-explorer/trace-explorer.module#TraceExplorerModule'
     }
 ];

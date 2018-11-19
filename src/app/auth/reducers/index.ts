@@ -20,10 +20,28 @@ export const reducers: ActionReducerMap<AuthState, AuthApiActions.AuthApiActions
 
 export const selectAuthState = createFeatureSelector<State, AuthState>('auth');
 
-export const selectAuthStatusState = createSelector(selectAuthState, (state: AuthState) => state.status);
-export const getCredentials = createSelector(selectAuthStatusState, fromAuth.getCredentials);
-export const getLoggedIn = createSelector(getCredentials, cred => !!cred);
+export const selectAuthStatusState = createSelector(
+    selectAuthState,
+    (state: AuthState) => state.status
+);
+export const getCredentials = createSelector(
+    selectAuthStatusState,
+    fromAuth.getCredentials
+);
+export const getLoggedIn = createSelector(
+    getCredentials,
+    cred => !!cred
+);
 
-export const selectLoginPageState = createSelector(selectAuthState, (state: AuthState) => state.loginPage);
-export const getLoginPageError = createSelector(selectLoginPageState, fromLoginPage.getError);
-export const getLoginPagePending = createSelector(selectLoginPageState, fromLoginPage.getPending);
+export const selectLoginPageState = createSelector(
+    selectAuthState,
+    (state: AuthState) => state.loginPage
+);
+export const getLoginPageError = createSelector(
+    selectLoginPageState,
+    fromLoginPage.getError
+);
+export const getLoginPagePending = createSelector(
+    selectLoginPageState,
+    fromLoginPage.getPending
+);
