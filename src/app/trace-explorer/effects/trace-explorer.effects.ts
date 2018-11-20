@@ -9,7 +9,7 @@ import * as fromAuth from '../../auth/reducers';
 import * as fromTraces from '../reducers';
 import * as fromRoot from '../../reducers';
 
-const ParentEventsQuery: string = `customEvents| where name == "Microsoft.IT.Diagnostics.Activity.ActivityCompletedEvent"| where tostring(customDimensions['parentActivityName']) == "none"| extend methodName = tostring(customDimensions['activityName']) | extend activityId = tostring(customDimensions['activityId']) | extend correlationId = tostring(customDimensions['correlationId']) | extend clientIp = tostring(customDimensions['client-ip']) | extend elapsedMilliseconds = tolong(customDimensions['elapsedMilliseconds']) | project methodName , activityId, correlationId , clientIp, elapsedMilliseconds | where elapsedMilliseconds > 1000| sort by elapsedMilliseconds desc | take 100`;
+const ParentEventsQuery: string = `customEvents| where name == "Microsoft.IT.Diagnostics.Activity.ActivityCompletedEvent"| where tostring(customDimensions['parentActivityName']) == "none"| extend methodName = tostring(customDimensions['activityName']) | extend activityId = tostring(customDimensions['activityId']) | extend correlationId = tostring(customDimensions['correlationId']) | extend clientIp = tostring(customDimensions['client-ip']) | extend elapsedMilliseconds = tolong(customDimensions['elapsedMilliseconds']) | project methodName , activityId, correlationId , clientIp, elapsedMilliseconds | where elapsedMilliseconds > 1000| sort by elapsedMilliseconds desc | take 25`;
 
 @Injectable()
 export class TraceExplorerEffects {

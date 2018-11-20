@@ -9,7 +9,8 @@ import { EffectsModule } from '@ngrx/effects';
 import { TraceExplorerEffects } from './effects/trace-explorer.effects';
 import { TraceDateRangerSelectorComponent } from './components/date-selector.component';
 import { FormsModule } from '@angular/forms';
-export const COMPONENTS = [TracePageComponent, TraceDateRangerSelectorComponent];
+import { EventTreeComponent } from './components/events-tree.component';
+export const COMPONENTS = [TracePageComponent, TraceDateRangerSelectorComponent, EventTreeComponent];
 
 @NgModule({
     imports: [

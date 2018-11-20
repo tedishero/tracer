@@ -1,12 +1,12 @@
 import { TraceExplorerPageActions } from '../actions';
-import { AIResponse, AIEvent } from 'src/app/core/models/ai.model';
+import { EventNode } from '../models/event-node.model';
 
 export interface State {
-    traceData: AIEvent[];
+    eventNodes: EventNode[];
 }
 
 export const initialState: State = {
-    traceData: []
+    eventNodes: []
 };
 
 export function reducer(state = initialState, action: TraceExplorerPageActions.TraceExplorerPageActionsUnion): State {
@@ -14,11 +14,15 @@ export function reducer(state = initialState, action: TraceExplorerPageActions.T
         case TraceExplorerPageActions.TraceExplorerPageActionTypes.DataUpdatedSuccessfully: {
             return {
                 ...state,
-                traceData: action.payload.data.tables[0].rows.map(r => {
+                eventNodes: action.payload.data.tables[0].rows.map(r => {
                     return {
-                        methodName: r[0],
+                        title:
+                            r[0]
+                                .split('.')
+                                .slice(4)
+                                .join('.') + ` (${r[4]})`,
                         clientIp: r[3],
-                        activityId: r[1],
+                        key: r[1],
                         correlationId: r[2],
                         elapsedMilliseconds: r[4]
                     };
@@ -32,4 +36,4 @@ export function reducer(state = initialState, action: TraceExplorerPageActions.T
     }
 }
 
-export const getTraceData = (state: State) => state.traceData;
+export const getEventNodes = (state: State) => state.eventNodes;

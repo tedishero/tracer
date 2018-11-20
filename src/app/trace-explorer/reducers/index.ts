@@ -33,7 +33,7 @@ export const getDateRangeFilter = createSelector(
     fromTraceFilter.getDateRange
 );
 
-export const getTracesData = createSelector(
+export const getEventNodes = createSelector(
     selectTraceDataState,
-    fromTraceExplorer.getTraceData
+    fromTraceExplorer.getEventNodes
 );
