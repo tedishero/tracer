@@ -6,9 +6,16 @@ import { Observable } from 'rxjs';
 @Component({
     selector: 'app-date-selector',
     template: `
-        <nz-range-picker [nzFormat]="dateFormat" [ngModel]="dateRange$ | async" (ngModelChange)="onChange($event)">
+        <nz-range-picker
+            [nzDisabled]="loading$ | async"
+            [nzFormat]="dateFormat"
+            [ngModel]="dateRange$ | async"
+            (ngModelChange)="onChange($event)"
+        >
         </nz-range-picker>
-        <button nz-button nzType="primary" (click)="onSearch()"><i nz-icon type="search"></i>Search</button>
+        <button nz-button nzType="primary" [nzLoading]="loading$ | async" (click)="onSearch()">
+            <i nz-icon type="search"></i>Search
+        </button>
     `,
     styles: [
         `
@@ -21,11 +28,13 @@ import { Observable } from 'rxjs';
 })
 export class TraceDateRangerSelectorComponent implements OnInit {
     dateRange$: Observable<Date[]>;
+    loading$: Observable<boolean>;
     dateFormat = 'yyyy/MM/dd';
     constructor(private store: Store<fromTrace.State>) {}
 
     ngOnInit() {
         this.dateRange$ = this.store.pipe(select(fromTrace.getDateRangeFilter));
+        this.loading$ = this.store.pipe(select(fromTrace.getLoadingState));
     }
 
     onChange(event: any) {

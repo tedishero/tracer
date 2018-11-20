@@ -3,10 +3,12 @@ import { EventNode } from '../models/event-node.model';
 
 export interface State {
     eventNodes: EventNode[];
+    loading: boolean;
 }
 
 export const initialState: State = {
-    eventNodes: []
+    eventNodes: [],
+    loading: false
 };
 
 export function reducer(state = initialState, action: TraceExplorerPageActions.TraceExplorerPageActionsUnion): State {
@@ -14,6 +16,7 @@ export function reducer(state = initialState, action: TraceExplorerPageActions.T
         case TraceExplorerPageActions.TraceExplorerPageActionTypes.DataUpdatedSuccessfully: {
             return {
                 ...state,
+                loading: false,
                 eventNodes: action.payload.data.tables[0].rows.map(r => {
                     return {
                         title:
@@ -29,7 +32,12 @@ export function reducer(state = initialState, action: TraceExplorerPageActions.T
                 })
             };
         }
-
+        case TraceExplorerPageActions.TraceExplorerPageActionTypes.DataRequested: {
+            return {
+                ...state,
+                loading: true
+            };
+        }
         default: {
             return state;
         }
@@ -37,3 +45,4 @@ export function reducer(state = initialState, action: TraceExplorerPageActions.T
 }
 
 export const getEventNodes = (state: State) => state.eventNodes;
+export const getLoadingState = (state: State) => state.loading;

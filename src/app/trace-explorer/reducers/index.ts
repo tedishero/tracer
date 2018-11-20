@@ -37,3 +37,8 @@ export const getEventNodes = createSelector(
     selectTraceDataState,
     fromTraceExplorer.getEventNodes
 );
+
+export const getLoadingState = createSelector(
+    selectTraceDataState,
+    fromTraceExplorer.getLoadingState
+);
