@@ -12,3 +12,11 @@ export interface AITable {
 export interface AIResponse {
     tables: AITable[];
 }
+
+export interface AIEvent {
+    methodName: string;
+    activityId: string;
+    correlationId: string;
+    clientIp: string;
+    elapsedMilliseconds: number;
+}

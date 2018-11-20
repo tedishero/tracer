@@ -1,20 +1,28 @@
 import { TraceExplorerPageActions } from '../actions';
-import { AIResponse } from 'src/app/core/models/ai.model';
+import { AIResponse, AIEvent } from 'src/app/core/models/ai.model';
 
 export interface State {
-    traceData: AIResponse;
+    traceData: AIEvent[];
 }
 
 export const initialState: State = {
-    traceData: undefined
+    traceData: []
 };
 
 export function reducer(state = initialState, action: TraceExplorerPageActions.TraceExplorerPageActionsUnion): State {
     switch (action.type) {
-        case TraceExplorerPageActions.TraceExplorerPageActionTypes.DataUpdated: {
+        case TraceExplorerPageActions.TraceExplorerPageActionTypes.DataUpdatedSuccessfully: {
             return {
                 ...state,
-                traceData: action.payload.data
+                traceData: action.payload.data.tables[0].rows.map(r => {
+                    return {
+                        methodName: r[0],
+                        clientIp: r[3],
+                        activityId: r[1],
+                        correlationId: r[2],
+                        elapsedMilliseconds: r[4]
+                    };
+                })
             };
         }
 

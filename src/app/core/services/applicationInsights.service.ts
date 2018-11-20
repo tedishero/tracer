@@ -10,10 +10,12 @@ import { Credentials } from 'src/app/auth/models/credentials';
 export class ApplicationInsightService {
     constructor(private http: HttpClient) {}
 
-    query(credentials: Credentials, query: string): Observable<AIResponse> {
+    query(credentials: Credentials, timeRange: string, query: string): Observable<AIResponse> {
         const headers = new HttpHeaders().set('x-api-key', credentials.key);
         return this.http.get<AIResponse>(
-            `https://api.applicationinsights.io/v1/apps/${credentials.appId}/query?query=${query}`,
+            `https://api.applicationinsights.io/v1/apps/${
+                credentials.appId
+            }/query?timespan=${timeRange}&query=${query}`,
             {
                 headers: headers
             }

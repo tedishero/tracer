@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Store, select } from '@ngrx/store';
 import * as fromAuth from 'src/app/auth/reducers';
+import * as fromRoot from 'src/app/reducers';
 import { TraceExplorerPageActions } from '../actions';
 import { exhaustMap, tap } from 'rxjs/operators';
 import { Credentials } from 'src/app/auth/models/credentials';
@@ -16,7 +17,7 @@ import { Credentials } from 'src/app/auth/models/credentials';
 export class TracePageComponent implements OnInit {
     cred$ = this.store.pipe(select(fromAuth.getCredentials));
 
-    constructor(private store: Store<fromAuth.State>) {}
+    constructor(private store: Store<fromRoot.State>) {}
 
     ngOnInit() {
         //

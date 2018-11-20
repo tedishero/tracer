@@ -3,18 +3,18 @@ import { AIResponse } from 'src/app/core/models/ai.model';
 
 export enum TraceExplorerPageActionTypes {
     DataRequested = '[Trace Explorer Page] Data Requested',
-    DataUpdated = '[Trace Explorer Page] Data Updated',
+    DataUpdatedSuccessfully = '[Trace Explorer Page] Data Updated Successfully',
     DateRangeUpdated = '[Trace Explorer Page] Date Time Range Updated'
 }
 
-export class DataUpdated implements Action {
-    readonly type = TraceExplorerPageActionTypes.DataUpdated;
+export class DataUpdatedSuccessfully implements Action {
+    readonly type = TraceExplorerPageActionTypes.DataUpdatedSuccessfully;
     constructor(public payload: { data: AIResponse }) {}
 }
 
 export class DataRequested implements Action {
     readonly type = TraceExplorerPageActionTypes.DataRequested;
-    constructor(public payload: {}) {}
+    constructor() {}
 }
 
 export class DateRangeUpdated implements Action {
@@ -22,4 +22,4 @@ export class DateRangeUpdated implements Action {
     constructor(public payload: { range: Date[] }) {}
 }
 
-export type TraceExplorerPageActionsUnion = DataUpdated | DataRequested | DateRangeUpdated;
+export type TraceExplorerPageActionsUnion = DataUpdatedSuccessfully | DataRequested | DateRangeUpdated;

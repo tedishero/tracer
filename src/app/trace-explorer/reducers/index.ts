@@ -32,3 +32,8 @@ export const getDateRangeFilter = createSelector(
     selectFilterState,
     fromTraceFilter.getDateRange
 );
+
+export const getTracesData = createSelector(
+    selectTraceDataState,
+    fromTraceExplorer.getTraceData
+);
