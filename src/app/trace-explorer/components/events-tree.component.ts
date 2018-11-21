@@ -29,7 +29,7 @@ export class EventTreeComponent implements OnInit {
 
     ngOnInit() {
         this.eventNodes$ = this.store
-            .pipe(select(fromTrace.getEventNodes))
+            .pipe(select(fromTrace.getAllRootNodes))
             .pipe(map(data => data.map(d => JSON.parse(JSON.stringify(d)))));
         this.loading$ = this.store.pipe(select(fromTrace.getLoadingState));
         this.nodeId$ = this.store.pipe(select(fromTrace.getSelectedNodeId));

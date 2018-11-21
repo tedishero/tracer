@@ -3,7 +3,7 @@ import { AIResponse } from 'src/app/core/models/ai.model';
 
 export enum TraceExplorerPageActionTypes {
     DataRequested = '[Trace Explorer Page] Data Requested',
-    DataUpdatedSuccessfully = '[Trace Explorer Page] Data Updated Successfully',
+    LoadRootNodesSuccess = '[Trace Explorer Page] Load Root Nodes Successfully',
     NodeExpanded = '[Trace Explorer Page] Node Expanded',
     ChildrenFetchedSuccessfully = '[Trace Explorer Page] Children Fetched Successfully',
     DateRangeUpdated = '[Trace Explorer Page] Date Time Range Updated'
@@ -19,8 +19,8 @@ export class ChildrenFetchedSuccessfully implements Action {
     constructor(public payload: { data: AIResponse }) {}
 }
 
-export class DataUpdatedSuccessfully implements Action {
-    readonly type = TraceExplorerPageActionTypes.DataUpdatedSuccessfully;
+export class LoadRootNodesSuccess implements Action {
+    readonly type = TraceExplorerPageActionTypes.LoadRootNodesSuccess;
     constructor(public payload: { data: AIResponse }) {}
 }
 
@@ -35,7 +35,7 @@ export class DateRangeUpdated implements Action {
 }
 
 export type TraceExplorerPageActionsUnion =
-    | DataUpdatedSuccessfully
+    | LoadRootNodesSuccess
     | DataRequested
     | DateRangeUpdated
     | NodeExpanded
