@@ -3,12 +3,16 @@ import { EventNode } from '../models/event-node.model';
 
 export interface State {
     eventNodes: EventNode[];
+    currentSelectedNodeId: string;
+    currentSelectedRootNodeId: string;
     loading: boolean;
 }
 
 export const initialState: State = {
     eventNodes: [],
-    loading: false
+    loading: false,
+    currentSelectedNodeId: undefined,
+    currentSelectedRootNodeId: undefined
 };
 
 export function reducer(state = initialState, action: TraceExplorerPageActions.TraceExplorerPageActionsUnion): State {
@@ -27,15 +31,20 @@ export function reducer(state = initialState, action: TraceExplorerPageActions.T
                         clientIp: r[3],
                         key: r[1],
                         correlationId: r[2],
-                        elapsedMilliseconds: r[4]
+                        elapsedMilliseconds: r[4],
+                        selectable: true
                     };
                 })
             };
         }
-        case TraceExplorerPageActions.TraceExplorerPageActionTypes.DataRequested: {
+        case TraceExplorerPageActions.TraceExplorerPageActionTypes.NodeExpanded: {
             return {
                 ...state,
-                loading: true
+                // loading: true,
+                currentSelectedNodeId: action.payload.nodeId,
+                currentSelectedRootNodeId: action.payload.isLeaf
+                    ? state.currentSelectedRootNodeId
+                    : action.payload.nodeId
             };
         }
         default: {
@@ -46,3 +55,5 @@ export function reducer(state = initialState, action: TraceExplorerPageActions.T
 
 export const getEventNodes = (state: State) => state.eventNodes;
 export const getLoadingState = (state: State) => state.loading;
+export const getSelectedNodeId = (state: State) => state.currentSelectedNodeId;
+export const getSelectedRootNodeId = (state: State) => state.currentSelectedRootNodeId;

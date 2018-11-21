@@ -6,4 +6,5 @@ export interface EventNode {
     correlationId: string;
     clientIp: string;
     elapsedMilliseconds: number;
+    timestamp?: Date;
 }

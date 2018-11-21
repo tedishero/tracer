@@ -3,11 +3,19 @@ import * as fromTrace from '../reducers';
 import { Store, select } from '@ngrx/store';
 import { EventNode } from '../models/event-node.model';
 import { Observable } from 'rxjs';
+import { TraceExplorerPageActions } from '../actions';
+import { map } from 'rxjs/operators';
 @Component({
     selector: 'app-event-tree',
     template: `
         <nz-skeleton [nzLoading]="loading$ | async" [nzActive]="true" [nzTitle]="false" [nzParagraph]="{ rows: 25 }">
-            <nz-tree [nzData]="eventNodes$ | async" nzShowLine="true" (nzClick)="nzEvent($event)"> </nz-tree>
+            <nz-tree
+                nzShowLine="true"
+                [nzData]="eventNodes$ | async"
+                (nzExpandChange)="onExpanded($event)"
+                (nzClick)="onNodeClick($event)"
+            >
+            </nz-tree>
         </nz-skeleton>
     `,
     changeDetection: ChangeDetectionStrategy.OnPush
@@ -15,11 +23,31 @@ import { Observable } from 'rxjs';
 export class EventTreeComponent implements OnInit {
     eventNodes$: Observable<EventNode[]>;
     loading$: Observable<boolean>;
+    nodeId$: Observable<string>;
 
     constructor(private store: Store<fromTrace.State>) {}
 
     ngOnInit() {
-        this.eventNodes$ = this.store.pipe(select(fromTrace.getEventNodes));
+        this.eventNodes$ = this.store
+            .pipe(select(fromTrace.getEventNodes))
+            .pipe(map(data => data.map(d => JSON.parse(JSON.stringify(d)))));
         this.loading$ = this.store.pipe(select(fromTrace.getLoadingState));
+        this.nodeId$ = this.store.pipe(select(fromTrace.getSelectedNodeId));
+        this.nodeId$.subscribe(x => {
+            console.log(x);
+        });
+    }
+
+    onExpanded(event: any) {
+        this.store.dispatch(
+            new TraceExplorerPageActions.NodeExpanded({
+                nodeId: event.node.key,
+                isLeaf: event.node.leaf
+            })
+        );
+    }
+
+    onNodeClick(event: any) {
+        console.log(`Node [${event.node.key}] got clicked`);
     }
 }
