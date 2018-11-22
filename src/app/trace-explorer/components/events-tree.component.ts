@@ -23,7 +23,6 @@ import { map } from 'rxjs/operators';
 export class EventTreeComponent implements OnInit {
     eventNodes$: Observable<EventNode[]>;
     loading$: Observable<boolean>;
-    nodeId$: Observable<string>;
 
     constructor(private store: Store<fromTrace.State>) {}
 
@@ -32,22 +31,18 @@ export class EventTreeComponent implements OnInit {
             .pipe(select(fromTrace.getAllRootNodes))
             .pipe(map(data => data.map(d => JSON.parse(JSON.stringify(d)))));
         this.loading$ = this.store.pipe(select(fromTrace.getLoadingState));
-        this.nodeId$ = this.store.pipe(select(fromTrace.getSelectedNodeId));
-        this.nodeId$.subscribe(x => {
-            console.log(x);
-        });
     }
 
     onExpanded(event: any) {
-        this.store.dispatch(
-            new TraceExplorerPageActions.NodeExpanded({
-                nodeId: event.node.key,
-                isLeaf: event.node.leaf
-            })
-        );
+        if (event && event.node && event.node.isExpanded) {
+            this.store.dispatch(
+                new TraceExplorerPageActions.NodeExpanded({
+                    nodeId: event.node.key,
+                    isLeaf: event.node.leaf
+                })
+            );
+        }
     }
 
-    onNodeClick(event: any) {
-        console.log(`Node [${event.node.key}] got clicked`);
-    }
+    onNodeClick(event: any) {}
 }

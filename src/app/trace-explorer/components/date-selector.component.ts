@@ -3,6 +3,7 @@ import * as fromTrace from '../reducers';
 import { Store, select } from '@ngrx/store';
 import { TraceExplorerPageActions } from '../actions';
 import { Observable } from 'rxjs';
+import { EventNode } from '../models/event-node.model';
 @Component({
     selector: 'app-date-selector',
     template: `
@@ -29,12 +30,17 @@ import { Observable } from 'rxjs';
 export class TraceDateRangerSelectorComponent implements OnInit {
     dateRange$: Observable<Date[]>;
     loading$: Observable<boolean>;
+    testing$: Observable<EventNode>;
     dateFormat = 'yyyy/MM/dd';
     constructor(private store: Store<fromTrace.State>) {}
 
     ngOnInit() {
         this.dateRange$ = this.store.pipe(select(fromTrace.getDateRangeFilter));
         this.loading$ = this.store.pipe(select(fromTrace.getLoadingState));
+        this.testing$ = this.store.pipe(select(fromTrace.getSelectedRootNode));
+        this.testing$.subscribe(node => {
+            console.log('Selected Node: ' + node);
+        });
     }
 
     onChange(event: any) {

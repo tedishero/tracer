@@ -68,16 +68,14 @@ export function reducer(state = initialState, action: TraceExplorerPageActions.T
                 state
             );
         }
-        // case TraceExplorerPageActions.TraceExplorerPageActionTypes.NodeExpanded: {
-        //     return {
-        //         ...state,
-        //         // loading: true,
-        //         currentSelectedNodeId: action.payload.nodeId,
-        //         currentSelectedRootNodeId: action.payload.isLeaf
-        //             ? state.currentSelectedRootNodeId
-        //             : action.payload.nodeId
-        //     };
-        // }
+        case TraceExplorerPageActions.TraceExplorerPageActionTypes.NodeExpanded: {
+            return {
+                ...state,
+                // loading: true,
+                selectedNodeId: action.payload.nodeId,
+                selectedRootNodeId: action.payload.isLeaf ? state.selectedRootNodeId : action.payload.nodeId
+            };
+        }
         default: {
             return state;
         }

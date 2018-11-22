@@ -68,13 +68,13 @@ export const {
     selectTotal: getTotalRootNodes
 } = fromTraceExplorer.adapter.getSelectors(selectTraceDataState);
 
-// export const getSelectedNode = createSelector(
-//     getBookEntities,
-//     getSelectedBookId,
-//     (entities, selectedId) => {
-//         return selectedId && entities[selectedId];
-//     }
-// );
+export const getSelectedRootNode = createSelector(
+    getRootNodeEntities,
+    getSelectedRootNodeId,
+    (entities, selectedRootId) => {
+        return selectedRootId && entities[selectedRootId];
+    }
+);
 
 export const getDateRangeFilter = createSelector(
     selectFilterState,
