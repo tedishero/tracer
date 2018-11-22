@@ -1,10 +1,11 @@
 export interface EventNode {
     title: string;
+    id: string;
     key: string;
-    expanded?: boolean;
     children?: EventNode[];
     correlationId: string;
     clientIp: string;
     elapsedMilliseconds: number;
+    isExpanded?: boolean;
     timestamp?: Date;
 }

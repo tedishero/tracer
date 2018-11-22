@@ -48,6 +48,11 @@ export const getSelectedRootNodeId = createSelector(
     fromTraceExplorer.getSelectedRootNodeId
 );
 
+export const getExpandedIds = createSelector(
+    selectTraceDataState,
+    fromTraceExplorer.getExpandedIds
+);
+
 export const getLoadingState = createSelector(
     selectTraceDataState,
     fromTraceExplorer.getLoadingState
